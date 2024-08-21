@@ -1,5 +1,5 @@
 import streamlit as st
-from config import type_emoji_dict, pokemons
+from config import type_emoji_dict, initial_pokemons
 
 st.set_page_config(
     page_title="포켓몬 도감",
@@ -8,6 +8,10 @@ st.set_page_config(
 
 st.title("streamlit 포켓몬 도감")
 st.markdown("**포켓몬**을 하나씩 추가해서 도감을 채워보세요")
+
+
+if "pokemons" not in st.session_state:
+    st.session_state.pokemons=initial_pokemons
 
 
 with st.form(key="form"):
@@ -29,7 +33,7 @@ with st.form(key="form"):
             st.error("포켓몬의 속성을 적어도 한 개 설정해주세요")
         else:
             st.success("포켓몬을 추가할 수 있습니다")
-            pokemons.append(
+            st.session_state.pokemons.append(
                 {
                     "name":name,
                     "types":types,
@@ -39,8 +43,8 @@ with st.form(key="form"):
 
 
 
-for i in range(0,len(pokemons),3):
-    row_poketmons=pokemons[i:i+3]
+for i in range(0,len(st.session_state.pokemons),3):
+    row_poketmons=st.session_state.pokemons[i:i+3]
     cols=st.columns(3)
     for j in range(len(row_poketmons)):
         with cols[j]:

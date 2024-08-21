@@ -18,7 +18,7 @@ type_emoji_dict = {
     "악": "😈",
     "페어리": "🧚"
 }
-pokemons = [
+initial_pokemons = [
     {
         "name": "피카츄",
         "types": ["전기"],
