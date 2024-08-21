@@ -1,5 +1,5 @@
 import streamlit as st
-from config import type_emoji_dict, initial_pokemons
+from config import type_emoji_dict, initial_pokemons,example_pokemon
 
 st.set_page_config(
     page_title="포켓몬 도감",
@@ -9,22 +9,31 @@ st.set_page_config(
 st.title("streamlit 포켓몬 도감")
 st.markdown("**포켓몬**을 하나씩 추가해서 도감을 채워보세요")
 
-
+#sesstion_state
 if "pokemons" not in st.session_state:
     st.session_state.pokemons=initial_pokemons
 
+#toggle
+auto_complete=st.toggle("예시 데이터로 채우기")
 
 with st.form(key="form"):
     col1,col2=st.columns(2)
     with col1:
-        name=st.text_input(label="포켓몬 이름")
+        name=st.text_input(
+            label="포켓몬 이름",
+            value=example_pokemon["name"] if auto_complete else '')
+        
     with col2:
         types=st.multiselect(
             label="포켓몬 속성",
             options=list(type_emoji_dict.keys()),
-            max_selections=2
+            max_selections=2,
+            default=example_pokemon["types"] if auto_complete else []
         )
-    image_url=st.text_input(label="포켓몬 이미지 URL")
+    image_url=st.text_input(
+        label="포켓몬 이미지 URL",
+        value=example_pokemon["image_url"] if auto_complete else ""
+        )
     submit=st.form_submit_button(label="Submit")
     if submit:
         if not name:
