@@ -65,3 +65,10 @@ for i in range(0,len(st.session_state.pokemons),3):
                 ]
                 st.subheader(" / ".join(emoji_types))
 
+                delete_button=st.button(label="삭제"
+                                        ,key=i+j,
+                                        use_container_width=True)
+                if delete_button:
+                    del st.session_state.pokemons[i+j]
+                    st.rerun()
+
